@@ -1,0 +1,83 @@
+<div class="wrapper">
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>
+
+          <mat-form-field class="cursor-pointer">
+            <mat-label>Market kind</mat-label>
+            <input type="text"
+              matInput
+              [readonly]="true"
+              [matAutocomplete]="marketKindAutocomplete"
+              [formControl]="marketKindControl"
+              #marketKindTrigger="matAutocompleteTrigger"
+              (click)="marketKindTrigger.openPanel()"
+            >
+            <mat-autocomplete #marketKindAutocomplete="matAutocomplete">
+              @for (marketKind of marketKinds; track marketKind) {
+                <mat-option [value]="marketKind">{{ marketKind }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Asset</mat-label>
+            <input type="text"
+              matInput
+              [matAutocomplete]="assetAutocomplete"
+              [formControl]="instrumentControl"
+              (click)="instrumentControl.setValue(null)"
+            >
+            <mat-autocomplete
+              (optionSelected)="setInstrument($event.option.value)"
+              #assetAutocomplete="matAutocomplete"
+              [displayWith]="displayInstrumentFn"
+            >
+              @for (instrument of filteredInstruments$ | async; track $index) {
+                <mat-option [value]="instrument">{{ instrument.symbol }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="content">
+      @if (currentInstrument$ | async) {
+        <div class="section">
+          <h3 class="section-caption">Market data</h3>
+          @if ( { value: realtimeData$ | async }; as data) {
+            <div class="asset-info">
+              <div class="market-price">
+                <div class="asset-item">
+                  <div>Symbol</div>
+                  <div class="asset-item-value">{{ (currentInstrument$ | async)?.symbol ?? '-' }}</div>
+                </div>
+                <div class="asset-item">
+                  <div>Price</div>
+                  <div class="asset-item-value">{{ data.value?.price ?? '-' }}</div>
+                </div>
+                <div class="asset-item">
+                  <div>Time</div>
+                  <div class="asset-item-value">{{ (data.value?.timestamp | date: 'dd MMM HH:mm:ss') ?? '-' }}</div>
+                </div>
+              </div>
+              @if ((currentInstrument$ | async)?.company; as company) {
+                <div class="company">
+                  <div>Company:</div>
+                  <div class="asset-item-value">{{ company }}</div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+        <div class="section section-chart">
+          <h3 class="section-caption">History charts</h3>
+          <app-chart/>
+        </div>
+      } @else {
+        <h3 class="chart-placeholder">Choose asset</h3>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

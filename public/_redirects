@@ -1,0 +1,1 @@
+/proxy/* https://platform.fintacharts.com/:splat 200!

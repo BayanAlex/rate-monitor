@@ -1,4 +1,6 @@
-# RateMonitor
+# Rate Monitor
+
+## Task from Magnise by Oleksandr Shyhyda. 02.2025
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
 
@@ -10,7 +12,7 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Once the server is running, open your browser and navigate to `http://localhost:4210/`. The application will automatically reload whenever you modify any of the source files.
 
 ## Code scaffolding
 

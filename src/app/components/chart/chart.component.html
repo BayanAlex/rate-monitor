@@ -1,0 +1,47 @@
+<div class="wrapper">
+  <div class="settings">
+    <mat-form-field>
+      <mat-label>Date range</mat-label>
+      <mat-date-range-input [formGroup]="range" [dateFilter]="dateFilter" [rangePicker]="picker">
+        <input [readonly]="true" matStartDate formControlName="start" placeholder="Start date">
+        <input [readonly]="true" matEndDate formControlName="end" placeholder="End date">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field class="cursor-pointer">
+      <mat-label>Period</mat-label>
+      <input type="text"
+        matInput
+        [readonly]="true"
+        [matAutocomplete]="periodAutocomplete"
+        [formControl]="periodControl"
+        #periodTrigger="matAutocompleteTrigger"
+        (click)="periodTrigger.openPanel()"
+      >
+      <mat-autocomplete #periodAutocomplete="matAutocomplete">
+        @for (period of periods; track period) {
+          <mat-option [value]="period">{{ period }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <ngx-charts-line-chart
+    [view]="view"
+    [legend]="false"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="false"
+    [showGridLines]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    xAxisLabel="Time"
+    yAxisLabel="Price"
+    [timeline]="false"
+    [rotateXAxisTicks]="false"
+    [results]="chartData$ | async"
+    [autoScale]="true"
+    [xAxisTickFormatting]="dateTickFormatting"
+  ></ngx-charts-line-chart>
+</div>

@@ -1,0 +1,26 @@
+:host {
+  min-height: 100%;
+  min-width: 100%;
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+
+  .cv-info {
+    display: flex;
+    justify-content: center;
+
+    a {
+      text-decoration: none;
+      color: #673AB7;
+      transition: all 0.3s;
+      width: 100%;
+
+      &:hover {
+        text-shadow: 0px 0px 1px #673AB7;
+      }
+    }
+  }
+}
